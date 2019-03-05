@@ -3,10 +3,13 @@ package com.spring.rest.example.service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
 import com.spring.rest.example.domain.User;
+import com.spring.rest.example.exceptions.UserAlreadyExistException;
+import com.spring.rest.example.exceptions.UserNotFoundException;
 
 @Component
 public class UserDaoService {
@@ -30,31 +33,34 @@ public class UserDaoService {
 		if (userList.contains(user)) {
 			userList.remove(user);
 		} else {
-			// Exceception Handling
+			throw new UserNotFoundException("User does not exist");
 		}
 		
 	}
 	
 	public User add(User user) {
 		if (userList.contains(user)) {
-			// Exception Handling
+			throw new UserAlreadyExistException("User already exist");
 		} else {
-			
 			if (user.getId() == null) {
 				user.setId(new Integer(++userCount));
 			}
-			
-			
 			userList.add(user);
 		}
-		
 		return user;
 	}
 	
 	public User findOne(Integer id) {
-		return userList
-					.stream()
-					.filter( u -> u.getId().equals(id))
-					.findFirst().get();
+		
+		Optional<User> user = userList
+				.stream()
+				.filter( u -> u.getId().equals(id))
+				.findFirst();
+		
+		if (user.isPresent()) {
+			return user.get();
+		} else {
+			throw new UserNotFoundException("User does not exist"); 
+		}
 	}
 }
