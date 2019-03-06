@@ -2,6 +2,7 @@ package com.spring.rest.example.service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,12 +30,25 @@ public class UserDaoService {
 		return userList;
 	}
 	
-	public void delete(User user) {
-		if (userList.contains(user)) {
-			userList.remove(user);
-		} else {
-			throw new UserNotFoundException("User does not exist");
+	public void delete(Integer id) {
+		
+		Iterator<User> itr = userList.iterator();
+		
+		User user = null;
+		boolean userDeleted = false;
+		while (itr.hasNext()) {
+			
+			user = itr.next();
+			if(user.getId().equals(id)) {
+				itr.remove();
+				userDeleted = true;
+				break;
+			}
 		}
+		
+		if (!userDeleted) {
+			throw new UserNotFoundException("User does not exist");
+		} 
 		
 	}
 	

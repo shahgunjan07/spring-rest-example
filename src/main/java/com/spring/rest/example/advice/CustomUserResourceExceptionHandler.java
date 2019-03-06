@@ -2,9 +2,11 @@ package com.spring.rest.example.advice;
 
 import java.util.Date;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -41,6 +43,14 @@ public class CustomUserResourceExceptionHandler extends ResponseEntityExceptionH
 		ExceptionResponse errorResponse  = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
 		return new ResponseEntity<Object>(errorResponse, HttpStatus.BAD_REQUEST);
 		
+	}
+	
+	@Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(
+			MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+		ExceptionResponse errorResponse  = new ExceptionResponse(new Date(), "Invalid inout parameters", ex.getBindingResult().toString());
+		return new ResponseEntity<Object>(errorResponse, HttpStatus.BAD_REQUEST);
 	}
 	
 }

@@ -3,8 +3,14 @@ package com.spring.rest.example.controllers;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +20,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.spring.rest.example.domain.User;
 import com.spring.rest.example.service.UserDaoService;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
+
 
 @RestController
 public class UserController {
@@ -27,13 +35,24 @@ public class UserController {
 	}
 	
 	@GetMapping(value="/users/{id}")
-	public ResponseEntity<Object> findOneUser(@PathVariable Integer id) {
+	public Resource<User> findOneUser(@PathVariable Integer id) {
 		User user = service.findOne(id);
-		return ResponseEntity.ok(user);
+		
+		/** Return HATEOAS Resource **/
+		Resource<User> resource = new Resource<User>(user);
+		ControllerLinkBuilder linkBuilder = linkTo(methodOn(this.getClass()).findAllUsers());
+		resource.add(linkBuilder.withRel("All-Users"));
+		
+		return resource;
+	}
+	
+	@DeleteMapping(value="/users/{id}")
+	public void deleteUser(@PathVariable Integer id) {
+		service.delete(id);
 	}
 	
 	@PostMapping(value="/users")
-	public ResponseEntity<Object> createUser(@RequestBody User user)  {
+	public ResponseEntity<Object> createUser(@Valid @RequestBody User user)  {
 		User newUser = service.add(user);
 		
 		/**

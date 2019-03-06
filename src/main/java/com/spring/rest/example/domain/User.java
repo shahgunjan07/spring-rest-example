@@ -2,13 +2,18 @@ package com.spring.rest.example.domain;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+
 public class User {
 
 	
 	private Integer id;
 	
+	@Size(min=2, message="Name shoud have at least 2 characters")
 	private String name;
 	
+	@Past(message="Please provide valid date of birth")
 	private LocalDate birthDate;
 	
 	
