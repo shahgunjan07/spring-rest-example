@@ -1,12 +1,14 @@
 package com.spring.rest.example.controllers;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.spring.rest.example.domain.User;
 import com.spring.rest.example.service.UserDaoService;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
 
 @RestController
@@ -39,6 +40,7 @@ public class UserController {
 		User user = service.findOne(id);
 		
 		/** Return HATEOAS Resource **/
+		/** Hyper Media As The Engine Of Application State **/
 		Resource<User> resource = new Resource<User>(user);
 		ControllerLinkBuilder linkBuilder = linkTo(methodOn(this.getClass()).findAllUsers());
 		resource.add(linkBuilder.withRel("All-Users"));
