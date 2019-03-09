@@ -2,24 +2,39 @@ package com.spring.rest.example.domain;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+
+import com.spring.rest.example.converter.LocalDateTimeConverter;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+@Entity(name="User")
 @ApiModel(description="User model object")
 public class User {
 
-	
+	@Id
+	@GeneratedValue
+	@Column(name="ID")
 	private Integer id;
 	
 	@ApiModelProperty(notes="Name should have at least two characters")
 	@Size(min=2, message="Name shoud have at least 2 characters")
+	@Column(name="FULLNAME")
 	private String name;
 	
 	@ApiModelProperty(notes="Birth date should not be any future date")
 	@Past(message="Please provide valid date of birth")
+	@Column(name="BIRTHDATE")
+	//@Convert(converter=LocalDateTimeConverter.class)
 	private LocalDate birthDate;
 	
 	

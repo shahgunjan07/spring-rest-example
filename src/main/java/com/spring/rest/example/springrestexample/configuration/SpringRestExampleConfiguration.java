@@ -2,9 +2,11 @@ package com.spring.rest.example.springrestexample.configuration;
 
 import java.util.Locale;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
@@ -25,6 +27,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @ComponentScan({"com.spring.rest.example"})
 @EnableSwagger2
+@EntityScan(basePackages="com.spring.rest.example.domain")
+@ImportResource(locations = {"classpath*:spring/application-context.xml"})
 public class SpringRestExampleConfiguration {
 
 	/**
@@ -75,4 +79,6 @@ public class SpringRestExampleConfiguration {
 	private Contact contact() {
 		return new Contact("Gunjan Shah", "https://github.com/shahgunjan07/spring-rest-example","shahgunjan07@gmail.com");
 	}
+	
+	
 }
