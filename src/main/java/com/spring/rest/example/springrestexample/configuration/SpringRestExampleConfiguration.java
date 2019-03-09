@@ -9,12 +9,22 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 @Configuration
 /**
  * Configure component scan so that SpringContainer can scan packages which are 
  * not similar to or sub-packages of the package where Spring Boot Application class defined.
  */
 @ComponentScan({"com.spring.rest.example"})
+@EnableSwagger2
 public class SpringRestExampleConfiguration {
 
 	/**
@@ -38,5 +48,31 @@ public class SpringRestExampleConfiguration {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setBasename("messages");
 		return messageSource;
+	}
+	
+	/**
+	 * Bean of swagger Docket
+	 * @return
+	 */
+	@Bean
+	public Docket  api() {
+		return new Docket(DocumentationType.SWAGGER_2)
+					.apiInfo(apiInfo())
+					.select()
+					.apis(RequestHandlerSelectors.any())
+					.paths(PathSelectors.any())
+					.build();
+	}
+	
+	private ApiInfo apiInfo() {
+		return new ApiInfoBuilder()
+					.contact(contact())
+					.description("Restful and Micro Service Example")
+					.title("Restful and Micro Service Example")
+					.build();
+	}
+	
+	private Contact contact() {
+		return new Contact("Gunjan Shah", "https://github.com/shahgunjan07/spring-rest-example","shahgunjan07@gmail.com");
 	}
 }
