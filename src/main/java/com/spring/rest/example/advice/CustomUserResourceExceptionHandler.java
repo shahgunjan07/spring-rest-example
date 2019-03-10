@@ -13,6 +13,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.spring.rest.example.domain.ExceptionResponse;
+import com.spring.rest.example.exceptions.PostNotFoundException;
 import com.spring.rest.example.exceptions.UserAlreadyExistException;
 import com.spring.rest.example.exceptions.UserNotFoundException;
 
@@ -39,6 +40,14 @@ public class CustomUserResourceExceptionHandler extends ResponseEntityExceptionH
 	
 	@ExceptionHandler(UserAlreadyExistException.class)
 	public final  ResponseEntity<Object> handleUserAlreaddyExistxception(Exception ex, WebRequest request) {
+	
+		ExceptionResponse errorResponse  = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
+		return new ResponseEntity<Object>(errorResponse, HttpStatus.BAD_REQUEST);
+		
+	}
+	
+	@ExceptionHandler(PostNotFoundException.class)
+	public final  ResponseEntity<Object> handlePostNotFoundException(Exception ex, WebRequest request) {
 	
 		ExceptionResponse errorResponse  = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
 		return new ResponseEntity<Object>(errorResponse, HttpStatus.BAD_REQUEST);

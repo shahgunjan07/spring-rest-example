@@ -432,6 +432,117 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Find All Users By JPA",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/jpa/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"jpa",
+						"users"
+					]
+				},
+				"description": "Find All Users By JPA"
+			},
+			"response": []
+		},
+		{
+			"name": "Find Specific User By JPA",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/jpa/users/1001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"jpa",
+						"users",
+						"1001"
+					]
+				},
+				"description": "Find Specific User By JPA"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User By JPA",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080//jpa/users/1001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"",
+						"jpa",
+						"users",
+						"1001"
+					]
+				},
+				"description": "Delete User By JPA"
+			},
+			"response": []
+		},
+		{
+			"name": "Create New User By JPA",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n        \"id\": 1002,\n        \"name\": \"Sreya Shah\",\n        \"birthDate\": \"1909-08-18\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080//jpa/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"",
+						"jpa",
+						"users"
+					]
+				},
+				"description": "Create New User By JPA"
+			},
+			"response": []
 		}
 	]
 }

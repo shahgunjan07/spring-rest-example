@@ -1,18 +1,15 @@
 package com.spring.rest.example.domain;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
-
-import com.spring.rest.example.converter.LocalDateTimeConverter;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -36,6 +33,9 @@ public class User {
 	@Column(name="BIRTHDATE")
 	//@Convert(converter=LocalDateTimeConverter.class)
 	private LocalDate birthDate;
+	
+	@OneToMany(mappedBy="user")
+	List<Post> posts;
 	
 	
 	public User() {
@@ -71,6 +71,15 @@ public class User {
 
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
+	}
+
+	
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
 	}
 
 	@Override

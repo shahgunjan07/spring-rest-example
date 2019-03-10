@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
@@ -29,6 +30,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @EntityScan(basePackages="com.spring.rest.example.domain")
 @ImportResource(locations = {"classpath*:spring/application-context.xml"})
+@EnableJpaRepositories(basePackages="com.spring.rest.example.repository")
 public class SpringRestExampleConfiguration {
 
 	/**
